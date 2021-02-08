@@ -56,9 +56,9 @@ class Schema < GraphQL::Schema
 end
 
 query_string = <<~QUERY
-query UserProfile($id: ID!, $includeAddress: Boolean = false) {
+query UserProfile($id: ID!, $skipId: Boolean = true, $includeAddress: Boolean = false) {
   users(id: $id) {
-    id
+    id @skip(if: $skipId)
     name
     email
     address @include(if: $includeAddress) {
