@@ -1,28 +1,6 @@
 require 'graphql'
-
-class User
-  attr_reader :id, :name, :email
-
-  def initialize(id:, name:, email:)
-    @id = id
-    @name = name
-    @email = email
-  end
-end
-
-USERS = {
-  1 => User.new(id: 1, name: "john", email: "john@email.com"),
-  2 => User.new(id: 2, name: "jane", email: "jane@email.com"),
-  3 => User.new(id: 3, name: "chita", email: "chita@email.com"),
-}
-
-module Types
-  class User < GraphQL::Schema::Object
-    field :id, ID, null: false
-    field :name, String, "", null: false
-    field :email, String, "", null: false
-  end
-end
+require_relative 'data'
+require_relative 'types'
 
 class QueryType < GraphQL::Schema::Object
   field :users, [Types::User], null: false do
@@ -61,7 +39,7 @@ QUERY
 
 
 puts "WITH DEFAULTS"
-pp Schema.execute(query_string_with_defaults).to_json
+puts JSON.pretty_generate(Schema.execute(query_string_with_defaults))
 puts
 puts "WITH MANDATORY VARIABLE"
-pp Schema.execute(query_string_with_mandatory_variable, variables: { email: "jane" }).to_json
+puts JSON.pretty_generate(Schema.execute(query_string_with_mandatory_variable, variables: { email: "jane" }))
