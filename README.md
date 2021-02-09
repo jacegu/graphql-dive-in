@@ -1,4 +1,4 @@
-# Notes on GraphQL
+# GraphQL dive in
 
 ## Resources
 
