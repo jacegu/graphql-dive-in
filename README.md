@@ -8,7 +8,7 @@
 - 36 Concepts GraphQL developers should know: https://36-concepts-graphql.netlify.app/
 
 
-## Notes
+## Introduction
 
 ### What is GraphQL
 
@@ -36,5 +36,70 @@
 * Supports explicit deprecation.
 * Provides aids to instrumentation and performance monitoring.
 * Strong type system (and validation through it).
+
+### Core Concepts
+
+* Schema Definition Language (SDL)
+  * Defines the capabilities of the API.
+  * Represent the contract between client and server.
+  * It's a collection of GraphQL types with special _root types_: query, mutation and subscription types.
+  * Example:
+    ```
+    type Person {
+      name: String!
+      age: Int!
+      posts: [Post!]
+    }
+    type Post {
+     title: String!
+     author: Person!
+    }
+    ```
+  * The `!` after a type indicates the field is mandatory.
+
+* Queries
+  * Example:
+    ```
+    {
+      allPersons {
+        name
+      }
+    }
+    ```
+  * `allPersons` is the _root field_ of the query.
+  * Everyting that follows is the  _payload_ of the query.
+  * Indicating how to return the last 2.
+    ```
+    {
+      allPersons(last: 2) {
+        name
+      }
+    }
+    ```
+* Mutations
+  * Altering the data in the server.
+  * 3 types of mutation: _creating_ new data, _updating_ existing data, and _deleting_ existing data.
+  * Same structure as queries, but must start with `mutation`:
+    ```
+    mutation {
+      createPerson(name: "Bob", age: 36) {
+        name
+        age
+      }
+    }
+    ```
+* Subscriptions
+  * Subscribing to events.
+  * Holds a steady connection to the server (stream).
+  * Example:
+    ```
+    subscription {
+      newPerson {
+        name
+        age
+      }
+    }
+    ```
+
 
 
